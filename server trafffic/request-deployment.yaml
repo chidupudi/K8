@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: request-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: request
+  template:
+    metadata:
+      labels:
+        app: request
+    spec:
+      containers:
+      - name: request
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c", "while true; do curl -s http://nginx-service:80 > /dev/null; done"]
